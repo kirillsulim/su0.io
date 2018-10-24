@@ -1,7 +1,10 @@
 import _ from 'lodash';
 import './style.css';
+import './mystyles.scss';
 import duck from './myduck.png';
 import printMe from './print.js';
+
+
 
 function component() {
   let element = document.createElement('div');
