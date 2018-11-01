@@ -1,5 +1,5 @@
 import React from "react";
-import Article from '../common/md-document-view';
+import Article from '../common/block-document-view';
 
 
 export default class BlogPost extends React.Component {
