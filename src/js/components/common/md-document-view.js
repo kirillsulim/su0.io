@@ -1,4 +1,6 @@
-import React from "react";
+import React from 'react';
+import { BlockMath } from 'react-katex';
+import hljs from 'highlight.js';
 
 
 class BlockDocumentError extends Error {
@@ -40,6 +42,25 @@ class Image extends React.Component {
     }
 }
 
+class Formula extends React.Component {
+    render() {
+        return <BlockMath>{this.props.code}</BlockMath>;
+    }
+}
+
+class Code extends React.Component {
+    render() {
+        let code = hljs.highlight(this.props.lang, this.props.code, true).value;
+        return <pre className="hljs">
+            <code dangerouslySetInnerHTML={{__html: code}}></code>
+        </pre>;
+    }
+}
+
+Code.defaultProps = {
+    lang: 'plaintext'
+}
+
 export default class BlockDocumentView extends React.Component {
     render() {
         let strs = [
@@ -59,25 +80,40 @@ export default class BlockDocumentView extends React.Component {
                 type: "Image",
                 src: "https://upload.wikimedia.org/wikipedia/ru/2/24/Lenna.png",
                 label: "Image example"
+            },
+            {
+                type: "Formula",
+                code: "\\int_0^\\infty x^2 dx"
+            },
+            {
+                type: "Code",
+                lang: "js",
+                code: "import hljs from 'highlight.js/lib/highlight';\nimport javascript from 'highlight.js/lib/languages/javascript';\nhljs.registerLanguage('javascript', javascript);"
             }
         ];
 
         var blocks = [];
+        var i = 0;
         strs.forEach(element => {
             switch(element.type) {
                 case "Header":
-                    blocks.push(<Header level={element.level} content={element.content} />)
+                    blocks.push(<Header key={i++} level={element.level} content={element.content} />)
                     break;
                 case "Paragraph":
-                    blocks.push(<Paragraph content={element.content} />);
+                    blocks.push(<Paragraph key={i++} content={element.content} />);
                     break;
                 case "Image":
-                    blocks.push(<Image src={element.src} label={element.label} />)
+                    blocks.push(<Image key={i++} src={element.src} label={element.label} />)
+                    break;
+                case "Formula":
+                    blocks.push(<Formula key={i++} code={element.code} />);
+                    break;
+                case "Code":
+                    blocks.push(<Code key={i++} lang={element.lang} code={element.code} />);
                     break;
                 default: throw BlockDocumentError(`Unknown block type ${element.type}`);
             }
         })
-
 
         return <div>
             {blocks}
