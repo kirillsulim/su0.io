@@ -9,7 +9,15 @@ export default class PostEditForm extends React.Component {
     constructor(props) {
         super(props);
 
-        this.state = {};
+        this.state = {
+            text: ''
+        };
+
+        this.handleChange = this.handleChange.bind(this);
+    }
+
+    handleChange(event) {
+        this.setState({text: event.target.value});
     }
 
     render() {
@@ -21,7 +29,7 @@ export default class PostEditForm extends React.Component {
                 </TabList>
             </div>
             <TabPanel>
-                <BlockDocumentEdit />
+                <BlockDocumentEdit value={this.state.text} onChange={this.handleChange}/>
             </TabPanel>
             <TabPanel>
                 <BlockDocumentView />

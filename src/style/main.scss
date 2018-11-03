@@ -2,3 +2,8 @@
 
 // Import only what you need from Bulma
 @import "~bulma/bulma.sass";
+
+.block-document-edit__textarea {
+    width: 100%;
+    resize: vertical;
+}
