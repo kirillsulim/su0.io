@@ -92,31 +92,31 @@ export default class BlockDocumentView extends React.Component {
             }
         ];
 
-        var blocks = [];
+        var result = [];
         var i = 0;
-        strs.forEach(element => {
+        this.props.blocks.forEach(element => {
             switch(element.type) {
                 case "Header":
-                    blocks.push(<Header key={i++} level={element.level} content={element.content} />)
+                    result.push(<Header key={i++} level={element.level} content={element.content} />)
                     break;
                 case "Paragraph":
-                    blocks.push(<Paragraph key={i++} content={element.content} />);
+                    result.push(<Paragraph key={i++} content={element.content} />);
                     break;
                 case "Image":
-                    blocks.push(<Image key={i++} src={element.src} label={element.label} />)
+                    result.push(<Image key={i++} src={element.src} label={element.label} />)
                     break;
                 case "Formula":
-                    blocks.push(<Formula key={i++} code={element.code} />);
+                    result.push(<Formula key={i++} code={element.code} />);
                     break;
                 case "Code":
-                    blocks.push(<Code key={i++} lang={element.lang} code={element.code} />);
+                    result.push(<Code key={i++} lang={element.lang} code={element.code} />);
                     break;
                 default: throw BlockDocumentError(`Unknown block type ${element.type}`);
             }
         })
 
         return <div>
-            {blocks}
+            {result}
         </div>;
     }
 }

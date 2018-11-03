@@ -14,10 +14,20 @@ export default class PostEditForm extends React.Component {
         };
 
         this.handleChange = this.handleChange.bind(this);
+        this.getBlocks = this.getBlocks.bind(this);
     }
 
     handleChange(event) {
         this.setState({text: event.target.value});
+    }
+
+    getBlocks() {
+        let text = this.state.text;
+
+        return [{
+            type: "Paragraph",
+            content: text
+        }];
     }
 
     render() {
@@ -32,7 +42,7 @@ export default class PostEditForm extends React.Component {
                 <BlockDocumentEdit value={this.state.text} onChange={this.handleChange}/>
             </TabPanel>
             <TabPanel>
-                <BlockDocumentView />
+                <BlockDocumentView blocks={this.getBlocks()} />
             </TabPanel>
         </Tabs>;
     }
