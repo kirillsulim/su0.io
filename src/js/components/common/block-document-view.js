@@ -50,7 +50,8 @@ class Formula extends React.Component {
 
 class Code extends React.Component {
     render() {
-        let code = hljs.highlight(this.props.lang, this.props.code, true).value;
+        let lang = hljs.getLanguage(this.props.lang) ? this.props.lang : 'plaintext';
+        let code = hljs.highlight(lang, this.props.code, true).value;
         return <pre className="hljs">
             <code dangerouslySetInnerHTML={{__html: code}}></code>
         </pre>;

@@ -1,8 +1,10 @@
 import MarkdownIt from 'markdown-it';
-import MdKatex from '@iktakahiro/markdown-it-katex'
+import MdKatex from '@iktakahiro/markdown-it-katex';
+import MdHighlight from 'markdown-it-highlightjs';
 
-const md = new MarkdownIt();
-md.use(MdKatex);
+const md = new MarkdownIt()
+    .use(MdKatex)
+    .use(MdHighlight);
 
 export function parseBlocks(rawMdCode) {
     var result = [];
@@ -35,6 +37,13 @@ export function parseBlocks(rawMdCode) {
         else if (token.type === 'math_block') {
             result.push({
                 type: 'Formula',
+                code: token.content
+            });
+        }
+        else if (token.type === 'fence' && token.tag === 'code') {
+            result.push({
+                type: 'Code',
+                lang: token.info,
                 code: token.content
             });
         }
