@@ -3,6 +3,7 @@ import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 
 import BlockDocumentEdit from '../common/block-document-edit';
 import BlockDocumentView from '../common/block-document-view';
+import {parseBlocks} from '../../markdown/parse-blocks';
 
 
 export default class PostEditForm extends React.Component {
@@ -14,20 +15,10 @@ export default class PostEditForm extends React.Component {
         };
 
         this.handleChange = this.handleChange.bind(this);
-        this.getBlocks = this.getBlocks.bind(this);
     }
 
     handleChange(event) {
         this.setState({text: event.target.value});
-    }
-
-    getBlocks() {
-        let text = this.state.text;
-
-        return [{
-            type: "Paragraph",
-            content: text
-        }];
     }
 
     render() {
@@ -42,7 +33,7 @@ export default class PostEditForm extends React.Component {
                 <BlockDocumentEdit value={this.state.text} onChange={this.handleChange}/>
             </TabPanel>
             <TabPanel>
-                <BlockDocumentView blocks={this.getBlocks()} />
+                <BlockDocumentView blocks={parseBlocks(this.state.text)} />
             </TabPanel>
         </Tabs>;
     }
